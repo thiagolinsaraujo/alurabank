@@ -1,7 +1,7 @@
 System.register([], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    function throttle(milissegundos = 500) {
+    function debounce(milissegundos = 500) {
         return function (target, propertyKey, descriptor) {
             const metodoOriginal = descriptor.value;
             let timer = 0;
@@ -14,7 +14,7 @@ System.register([], function (exports_1, context_1) {
             return descriptor;
         };
     }
-    exports_1("throttle", throttle);
+    exports_1("debounce", debounce);
     return {
         setters: [],
         execute: function () {
