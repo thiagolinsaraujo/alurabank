@@ -46,18 +46,19 @@ System.register(["../views/index", "../models/index", "../helpers/decorators/ind
                 _ehDiaUtil(data) {
                     return data.getDay() != DiaDaSemana.Sabado && data.getDay() != DiaDaSemana.Domingo;
                 }
-                importarDados() {
-                    function isOk(res) {
+                importaDados() {
+                    this._service
+                        .obterNegociacoes(res => {
                         if (res.ok) {
                             return res;
                         }
                         else {
                             throw new Error(res.statusText);
                         }
-                    }
-                    this._service
-                        .obterNegociacoes(isOk)
-                        .then(negociacoes => {
+                    })
+                        .then((negociacoes) => {
+                        negociacoes.forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                        this._negociacoesView.update(this._negociacoes);
                     });
                 }
             };
@@ -75,7 +76,7 @@ System.register(["../views/index", "../models/index", "../helpers/decorators/ind
             ], NegociacaoController.prototype, "adiciona", null);
             __decorate([
                 index_3.debounce()
-            ], NegociacaoController.prototype, "importarDados", null);
+            ], NegociacaoController.prototype, "importaDados", null);
             exports_1("NegociacaoController", NegociacaoController);
             (function (DiaDaSemana) {
                 DiaDaSemana[DiaDaSemana["Domingo"] = 0] = "Domingo";
